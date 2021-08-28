@@ -25,6 +25,8 @@ export const getAll = () =>
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
     method: 'PUT',
+    mode: 'cors',
+    origin: 'http://localhost:3000',
     headers: {
       ...headers,
       'Content-Type': 'application/json'

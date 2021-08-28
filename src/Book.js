@@ -7,18 +7,22 @@ class Book extends Component {
 
     render() {
         const { book, onUpdateBook } = this.props
+        const handleShelfChange = (e) => {
+          let shelf = e.value
+          book.shelf = shelf;
+          onUpdateBook(book);
+        }
         return(
-            <li key={book.industryIdentifiers[1].identifier} className='book-list-item'>
+            <li key={book.id} className='book-list-item'>
                     <div className="book">
                       <div className="book-top">
                         <div className="book-cover" style={{backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                         <div className="book-shelf-changer">
-                          <select onChange= {onUpdateBook(book)}>
+                          <select defaultValue={book.shelf} onChange={handleShelfChange(this)}>
                             <option value="move" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>
-                            <option value="none">None</option>
                           </select>
                         </div>
                       </div>

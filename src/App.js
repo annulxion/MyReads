@@ -7,8 +7,7 @@ import SearchBar from './Search'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    shelves: ["wantToRead", "currentlyReading", "read"]
+    books: []
   }
   componentDidMount() {
     BooksAPI.getAll()
@@ -22,15 +21,12 @@ class BooksApp extends React.Component {
   
   updateBook = (book) => {
     BooksAPI.update(book, book.shelf)
+    BooksAPI.get(book)
    .then((book) => {
-     this.setState((currentState) => ({
-       contacts: currentState.books.concat([book])
-     }))
+     this.setState((prevState) => {
+        prevState[book].shelf = book.shelf
+     })
    })
-  }
-
-  searchBook = (query) => {
-    BooksAPI.search(query, 20)
   }
   
   render() {
@@ -42,7 +38,6 @@ class BooksApp extends React.Component {
                 this.updateBook(book)
                 history.push('/')
               }}
-              onSearchBook={this.searchBook}
               />
           )} />
             <Route exact path='/' render={() => (
