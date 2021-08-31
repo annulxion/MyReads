@@ -5,13 +5,13 @@ import Book from './Book';
 class Shelves extends Component {
     render() {
       const { books, onUpdateBook } = this.props
-      const read = books.filter((book) => (
+      let read = books.filter((book) => (
         book.shelf === "read"
     ))
-    const currentlyReading = books.filter((book) => (
+    let currentlyReading = books.filter((book) => (
       book.shelf === "currentlyReading"
   ))
-  const wantToRead = books.filter((book) => (
+  let wantToRead = books.filter((book) => (
     book.shelf === "wantToRead"
 ))
         return (

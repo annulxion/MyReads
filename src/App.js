@@ -9,6 +9,7 @@ class BooksApp extends React.Component {
   state = {
     books: []
   }
+
   componentDidMount() {
     BooksAPI.getAll()
 .then((books) => {
@@ -20,13 +21,11 @@ class BooksApp extends React.Component {
   }
   
   updateBook = (book) => {
-    BooksAPI.update(book, book.shelf)
-    BooksAPI.get(book)
-   .then((book) => {
-     this.setState((prevState) => {
-        prevState[book].shelf = book.shelf
-     })
-   })
+    this.setState(() => ({
+      
+   }))
+
+   BooksAPI.update(book, book.shelf)
   }
   
   render() {
@@ -43,9 +42,7 @@ class BooksApp extends React.Component {
             <Route exact path='/' render={() => (
           <Shelves 
           books={this.state.books}
-          onUpdateBook={(book) => {
-            this.updateBook(book)
-          }}
+          onUpdateBook={this.updateBook}
           />
           )} /> 
       </div> 

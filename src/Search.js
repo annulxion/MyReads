@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-import debounce from "lodash.debounce";
+//import debounce from "lodash.debounce";
 import SearchResults from './SearchResults';
 
 class SearchBar extends Component {
@@ -9,42 +9,17 @@ class SearchBar extends Component {
     criteria: []
   }
 
-  handleCriteriaChange = criteria => {
-    this.setState({ criteria: criteria });
-  };
-
-  notifyOnChange = newCriteria => {
-    this.handleCriteriaChange(newCriteria);
-  };
-
-  handleMatchingChange = debounce(event => {
-    const { value } = event.target;
-
-    let newValue;
-    if (value) {
-      newValue = value;
-    } else {
-      newValue= undefined;
-    }
-
-    const newCriteria = {
-      ...this.props.criteria,
-      matching: newValue
-    };
-    
-    this.notifyOnChange(newCriteria);
-    
-  }, 300);
-
-  searchBook = (e) => {
-    BooksAPI.search(e, 20)
+  searchBook = (query) => {
+    BooksAPI.search(query, 20)
     .then((criteria) => {
-      this.setState({ criteria: criteria});
+      this.setState(() => ({
+        criteria
+      }))
+      console.log(criteria)
     })
-  }
+      }
 
     render() {
-      const criteria = this.state.criteria
       const { onUpdateBook } = this.props
         
         return(
@@ -53,13 +28,9 @@ class SearchBar extends Component {
             <Link to='/' className='close-search'>Close</Link>
               <div className="search-books-input-wrapper">
                 <input type="search" placeholder="Search by title or author"
-                defaultValue={criteria}
+                defaultValue=''
                 autoFocus
-                  onChange={(e) => {
-                    e.persist();
-                    this.searchBook(e);
-                  }}
-                   />
+                  onChange={this.searchBook} />
               </div>
             </div>
            <SearchResults 

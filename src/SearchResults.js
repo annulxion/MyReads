@@ -5,7 +5,7 @@ class SearchResults extends Component {
 render() {
     const { criteria, onUpdateBook } = this.props
 
-    if (criteria.length === 0) return <h2>No data found</h2>
+    if (criteria.length === 0) return <br></br>
     return(
         
         <div className="search-books-results">
