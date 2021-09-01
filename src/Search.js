@@ -1,41 +1,49 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-//import debounce from "lodash.debounce";
 import SearchResults from './SearchResults';
 
 class SearchBar extends Component {
   state = {
-    criteria: []
-  }
+    criteria: [],
+    error: false
+  };
 
-  searchBook = (query) => {
-    BooksAPI.search(query, 20)
-    .then((criteria) => {
-      this.setState(() => ({
-        criteria
-      }))
-      console.log(criteria)
-    })
-      }
+  searchBook =(search) => {
+    if (search) {
+    BooksAPI.search(search.trim(), 20)
+    .then(books => {
+        books.length > 0
+        ? this.setState({ criteria: books, error: false })
+        : this.setState({ criteria: [], error: true });
+      });
+
+      } else this.setState({ criteria: [], error: false })
+}
+
+fetchBooks = e => {
+  this.searchBook(e.target.value)
+}
 
     render() {
-      const { onUpdateBook } = this.props
+      const { criteria, error } = this.state
+      const { books, onUpdateBook } = this.props
         
         return(
             <div className="search-books">
             <div className="search-books-bar">
             <Link to='/' className='close-search'>Close</Link>
               <div className="search-books-input-wrapper">
-                <input type="search" placeholder="Search by title or author"
-                defaultValue=''
-                autoFocus
-                  onChange={this.searchBook} />
+                <input type="text" placeholder="Search by title or author"
+                  autoFocus
+                  onChange={this.fetchBooks} />
               </div>
             </div>
            <SearchResults 
-                criteria={this.state.criteria} 
-                onUpdateBook={onUpdateBook}  
+                criteria={criteria}
+                books={books} 
+                onUpdateBook={onUpdateBook}
+                error={error}  
            />
 
           </div>

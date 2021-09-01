@@ -3,19 +3,26 @@ import Book from './Book';
 
 class SearchResults extends Component {
 render() {
-    const { criteria, onUpdateBook } = this.props
-
-    if (criteria.length === 0) return <br></br>
-    return(
-        
+    const { criteria, books, onUpdateBook, error } = this.props
+    const noThumbnail = criteria.filter(book => book.imageLinks)
+    return( 
         <div className="search-books-results">
+            {noThumbnail.length > 0 && (
             <ol className="books-grid">
-              {criteria.map((book)=> (
-                    <Book book={book} onUpdateBook={onUpdateBook}/>
+              {noThumbnail.map((book)=> (
+                    <Book key={book.id} book={book} books={books} onUpdateBook={onUpdateBook}/>
                 ))}
+                
             </ol>
+            )}
+            {error && (
+                <h3>No results</h3>
+            )}
+            
         </div>
+        
     )
+    
 }
 
 
