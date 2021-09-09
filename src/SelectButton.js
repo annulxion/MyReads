@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 
 class SelectButton extends Component {
+    // make our select button and pull in state to identify 
+    // each book's default shelf by looping through state object.
+    // update function goes all the way up to state on App page
 render() {
     const { book, books, onUpdateBook } = this.props
     const handleShelfChange = (e) => {
@@ -11,7 +14,6 @@ render() {
     for (let i of books) {
         if (i.id === book.id) {
             defaultShelf = i.shelf;
-            break;
         }
     }
 

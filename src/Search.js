@@ -4,29 +4,30 @@ import * as BooksAPI from './BooksAPI'
 import SearchResults from './SearchResults';
 
 class SearchBar extends Component {
+  // state array (criteria) only needed at this level and below.
+  // call search API, then determine if 'books' response is undefined
+  // or length > 0, then pass json resp into 'criteria' array.
+  // otherwise, change back to empty array. 
   state = {
-    criteria: [],
-    error: false
+    criteria: []
   };
 
   searchBook =(search) => {
-    if (search) {
-    BooksAPI.search(search.trim(), 20)
+    BooksAPI.search(search.trim())
     .then(books => {
-        books.length > 0
-        ? this.setState({ criteria: books, error: false })
-        : this.setState({ criteria: [], error: true });
+        if(undefined !== books && books.length > 0) {
+        this.setState({ criteria: books })}
+        else {this.setState({ criteria: [] })}
       });
 
-      } else this.setState({ criteria: [], error: false })
-}
+      }
 
 fetchBooks = e => {
   this.searchBook(e.target.value)
 }
 
     render() {
-      const { criteria, error } = this.state
+      const { criteria } = this.state
       const { books, onUpdateBook } = this.props
         
         return(
@@ -42,8 +43,7 @@ fetchBooks = e => {
            <SearchResults 
                 criteria={criteria}
                 books={books} 
-                onUpdateBook={onUpdateBook}
-                error={error}  
+                onUpdateBook={onUpdateBook} 
            />
 
           </div>

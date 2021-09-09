@@ -3,7 +3,8 @@ import SelectButton from './SelectButton'
 
 
 class Book extends Component {
-   
+   // pass filtered book data, books state, and update fxn as props
+   // create list item with book id, image, author, and title
 
     render() {
         const { book, books, onUpdateBook } = this.props

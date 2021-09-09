@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import Book from './Book';
 
 class Shelves extends Component {
+  // pass state and update function through props
+  // create shelves by filtering on shelf name
+  // and mapping Book components
     render() {
       const { books, onUpdateBook } = this.props
       let read = books.filter((book) => (
