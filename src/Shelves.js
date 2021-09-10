@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import Book from './Book';
+import Shelf from './Shelf';
 
 class Shelves extends Component {
   // pass state and update function through props
@@ -11,53 +11,31 @@ class Shelves extends Component {
       let read = books.filter((book) => (
         book.shelf === "read"
     ))
+    read.title = "Read"
+
     let currentlyReading = books.filter((book) => (
       book.shelf === "currentlyReading"
   ))
+  currentlyReading.title = "Currently Reading"
+
   let wantToRead = books.filter((book) => (
     book.shelf === "wantToRead"
-))
+  ))
+  wantToRead.title = "Want To Read"
+
         return (
-            <div className="list-books">
+          <div>
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                  <ol className='books-grid'>
-                  {currentlyReading.map((book)=> (
-                    <Book key={book.id} book={book} books={books} onUpdateBook={onUpdateBook}/>
-                ))}
+            <div className="list-books">
+              <Shelf shelf= {currentlyReading} books={books} onUpdateBook={onUpdateBook}/>
 
-            </ol>
-                
-              </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                  <ol className='books-grid'>
-                {wantToRead.map((book)=> (
-                    <Book key={book.id} book={book} books={books} onUpdateBook={onUpdateBook}/>
-                ))}
+              <Shelf shelf= {wantToRead} books={books} onUpdateBook={onUpdateBook}/>
 
-            </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                  <ol className='books-grid'>
-                {read.map((book)=> (
-                    <Book key={book.id} book={book} books={books} onUpdateBook={onUpdateBook}/>
-                ))}
+              <Shelf shelf= {read} books={books} onUpdateBook={onUpdateBook}/>
 
-            </ol>
-                  </div>
-                </div>
-              </div>
+      
             </div>
             <div className="open-search">
             <Link to='/search'
@@ -65,7 +43,6 @@ class Shelves extends Component {
               <button>Add a book</button>
               </Link>
             </div>
-          </div>
           </div>
         );
     }

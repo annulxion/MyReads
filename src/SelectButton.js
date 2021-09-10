@@ -11,6 +11,7 @@ render() {
       onUpdateBook(book);
     }
     let defaultShelf = 'none';
+    
     for (let i of books) {
         if (i.id === book.id) {
             defaultShelf = i.shelf;
